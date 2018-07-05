@@ -15,19 +15,17 @@
 <div class="news-control">
     <div class="container">
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s4">
                 <select id="country">
-                    <option value="" disabled selected>Choose your country</option>
+                    <option value="" disabled selected>Select country</option>
                     <option value="ua">Ukraine</option>
                     <option value="us">USA</option>
-                    <option value="gb">United Kingdom</option>
-                    <option value="sg">Singapore</option>
                 </select>
                 <label>Materialize Select</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s4">
                 <select id="category">
-                    <option value="" disabled selected>Choose your category</option>
+                    <option value="" disabled selected>Select category</option>
                     <option value="general">All news</option>
                     <option value="business">Business</option>
                     <option value="entertainment">Entertainment</option>
@@ -35,34 +33,37 @@
                     <option value="science">Science</option>
                     <option value="sports">Sports</option>
                     <option value="technology">Technology</option>
+                    <option value="non-category">Non-Category</option>
+                </select>
+                <label>Materialize Select</label>
+            </div>
+            <div class="input-field col s4">
+                <select id="newsSource">
+                    <option value="" disabled selected>Select resource</option>
+                    <option value="abc-news">ABC NEWS</option>
+                    <option value="abc-news-ua">ABC NEWS UA</option>
+                    <option value="bbc-sport">BBC-SPORT</option>
+                    <option value="cnn">CNN</option>
+                    <option value="cnn-es">CNN Spanish</option>
+                    <option value="daily-mail">DAILY MAIL</option>
+                    <option value="google-news">GOOGLE NEWS</option>
+                    <option value="national-geographic">National Geographic</option>
+                    <option value="the-washington-post">THE WASHINGTON POST</option>
+                    <option value="new24">News24</option>
                 </select>
                 <label>Materialize Select</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s6">
-                <select id="newsSource">
-                    <option value="" disabled selected>Choose your news resource</option>
-                    <option value="abc-news">ABC NEWS</option>
-                    <option value="ars-technica">ARS-TECHNICA</option>
-                    <option value="bbc-sport">BBC-SPORT</option>
-                    <option value="bloomberg">BLOOMBERG</option>
-                    <option value="cnn">CNN</option>
-                    <option value="daily-mail">DAILY MAIL</option>
-                    <option value="google-news">GOOGLE NEWS</option>
-                    <option value="metro">METRO</option>
-                    <option value="the-washington-post">THE WASHINGTON POST</option>
-                    <option value="the-wall-street-journal">THW WALL STREET JOURNAL</option>
-                </select>
-                <label>Materialize Select</label>
-            </div>
-            <div class="input-field col s4">
-                <input id="search" type="text">
-                <label for="search">Search news</label>
-            </div>
-            <div class="input-field col s2">
-                <a class="waves-effect waves-light btn" id="searchBtn">Search</a>
-            </div>
+            <form name="searching">
+                <div class="input-field col s12">
+                    <input id="search" type="text">
+                    <label for="search">Search news</label>
+                </div>
+                <div class="input-field col s4">
+                    <a class="waves-effect waves-light btn" id="searchBtn" type="submit">Search</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
