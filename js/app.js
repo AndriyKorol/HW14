@@ -3,76 +3,75 @@ const http = new Http();
 // Init UI
 const ui = new UI();
 // Api key
-const apiKey = "b09139bfceb545c4a56068e424f433a7";
+const apiKey = "c470735f5d6143a9a09869bf563b8eae";
 
 
 // Init elements
 const select = document.getElementById("country");
-const category = document.getElementById("category");
-const sources = document.getElementById("newsSource");
 const searchInput = document.getElementById("search");
 const searchBtn = document.getElementById("searchBtn");
+const category = document.getElementById("category");
+const newsSources = document.getElementById("newsSource");
 
 // All events
 select.addEventListener("change", onChangeCountry);
-category.addEventListener("change", onChangeCountry);
-sources.addEventListener("change", onChangeNewsSource);
+category.addEventListener("change", onChangeCategory);
+newsSources.addEventListener("change", onChangeNewsSource);
 searchBtn.addEventListener("click", onSearch);
 
-
-
-// Новости по стране и категории
 // Event handlers
 function onChangeCountry(e) {
   // Показываю прелодер
   ui.showLoader();
   // Делаем запрос на получение новостей по выбранной стране
-    http.get(`https://newsapi.org/v2/top-headlines?country=${select.value}&category=${category.value}&apiKey=${apiKey}`, showNews);
+
+  http.get(`https://newsapi.org/v2/top-headlines?country=${select.value}&apiKey=${apiKey}`, parser);
+
 }
 
+function onChangeCategory(e) {
+    // Показываю прелодер
+    ui.showLoader();
+    // Делаем запрос на получение новостей по выбранной стране
+    if(select.value.length){
+      let url = `https://newsapi.org/v2/top-headlines?country=${select.value}&category=${category.value}&apiKey=${apiKey}`;
+      http.get(url, parser);
+    }
+}
 
-// Новости по ресурсу
 function onChangeNewsSource(e) {
     // Показываю прелодер
     ui.showLoader();
     // Делаем запрос на получение новостей по выбранной стране
-    http.get(`https://newsapi.org/v2/top-headlines?sources=${sources.value}&apiKey=${apiKey}`, showNews);
+    http.get(`https://newsapi.org/v2/top-headlines?sources=${newsSources.value}&apiKey=${apiKey}`, parser);
+
 }
-
-
-function showNews(err, res) {
-    if (!err) {
-        // Пробразовываем из JSON в обычный объект
-        const response = JSON.parse(res);
-        // Удаляем разметку из контейнера
-        ui.clearContainer();
-        // перебираем новости из поля articles в объекте response
-        response.articles.forEach(news => ui.addNews(news));
-    } else {
-        // Выводим ошибку
-        ui.showError(err);
-        ui.showInfo("По вашему запросу новостей не найдено!");
-    }
-}
-
 
 function onSearch(e) {
   // Делаем запрос на получение новостей по тому что введено в инпут
-  http.get(`https://newsapi.org/v2/everything?q=${searchInput.value}&apiKey=${apiKey}`, function (err, res) {
+  //   document.forms['searching'].addEventListener('submit', function(e) {
+  //       e.preventDefault();
+        http.get(`https://newsapi.org/v2/everything?q=${searchInput.value}&apiKey=${apiKey}`, parser);
+
+    // });
+}
+
+function parser(err, res) {
     if (err) return ui.showError(err);
 
     const response = JSON.parse(res);
 
     if (response.totalResults) {
-      // Удаляем разметку из контейнера
-      ui.clearContainer();
-      // перебираем новости из поля articles в объекте response
-      response.articles.forEach(news => ui.addNews(news));
+        // Удаляем разметку из контейнера
+        ui.clearContainer();
+        // перебираем новости из поля articles в объекте response
+        response.articles.forEach(news => ui.addNews(news));
     } else {
-      ui.showInfo("По вашему запросу новостей не найдено!");
+        ui.showInfo(`Новин по Вашому запиту: " ${select.value} ${category.value} ${newsSources.value} ${searchInput.value} " - не знайдено`);
     }
-  });
+    document.forms['searching'].reset();
 }
+
 
 // Отдельный запрос на получение ресурсов
 // генерируем селект с ресурсами
